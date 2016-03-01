@@ -1,0 +1,438 @@
+#uselib "hspext.dll"
+#func regkey "_regkey@16" int, str, int, int
+#func regkill "_regkill@16" int, str, int, int
+#func getreg "_getreg@16" var, str, int, int
+#func setreg "_setreg@16" var, str, int, int
+#func reglist "_reglist@16" var, int, int, int
+#func regdone onexit "_regdone@16" int, int, int, int
+#func comopen "_comopen@16" int, str, int, int
+#func comclose "_comclose@16" int, int, int, int
+#func comput "_comput@16" bmscr, str, int, int
+#func computc "_computc@16" int, int, int, int
+#func comget "_comget@16" var, int, int, int
+#func comgetc "_comgetc@16" var, int, int, int
+#func comstat "_comstat@16" var, int, int, int
+#func comcontrol "_comcontrol@16" int, int, int, int
+#func gfini "_gfini@16" bmscr, int, int, int
+#func gfdec "_gfdec@16" int, int, int, int
+#func gfinc "_gfinc@16" int, int, int, int
+#func gfcopy "_gfcopy@16" bmscr, int, int, int
+#func emath "_emath@16" int, int, int, int
+#func emstr "_emstr@16" var, int, int, int
+#func emcnv "_emcnv@16" var, str, int, int
+#func emint "_emint@16" var, int, int, int
+#func emsin "_emsin@16" var, int, int, int
+#func emcos "_emcos@16" var, int, int, int
+#func ematan "_ematan@16" var, int, int, int
+#func emsqr "_emsqr@16" var, int, int, int
+#func sysexit "_sysexit@16" int, int, int, int
+#func fxcopy "_fxcopy@16" var, str, int, int
+#func fxren "_fxren@16" var, str, int, int
+#func fxinfo "_fxinfo@16" var, int, int, int
+#func fxaset "_fxaset@16" bmscr, str, int, int
+#func fxaget "_fxaget@16" var, str, int, int
+#func fxtget "_fxtget@16" var, str, int, int
+#func fxtset "_fxtset@16" var, str, int, int
+#func fxshort "_fxshort@16" var, str, int, int
+#func fxlink "_fxlink@16" var, str, int, int
+#func fxdir "_fxdir@16" var, int, int, int
+#func clipset "_clipset@16" bmscr, str, int, int
+#func clipget "_clipget@16" var, int, int, int
+#func clipsetg "_clipsetg@16" bmscr, int, int, int
+#func aplsel "_aplsel@16" bmscr, str, int, prefstr
+#func aplobj "_aplobj@16" bmscr, str, int, prefstr
+#func aplact "_aplact@16" int, int, int, prefstr
+#func aplstr "_aplstr@16" bmscr, str, int, int
+#func aplkey "_aplkey@16" bmscr, int, int, int
+#func aplkeyu "_aplkeyu@16" bmscr, int, int, int
+#func aplkeyd "_aplkeyd@16" bmscr, int, int, int
+#func aplfocus "_aplfocus@16" bmscr, int, int, int
+#func aplget "_aplget@16" var, int, int, int
+#func apledit "_apledit@16" var, int, int, prefstr
+#func selfolder "_selfolder@16" var, str, int, prefstr
+#func lzcopy "_lzcopy@16" bmscr, str, int, prefstr
+#func lzdist "_lzdist@16" bmscr, str, int, int
+#func pipeexec "_pipeexec@16" var, str, int, int
+#func pipeput "_pipeput@16" int, int, int, int
+#func pipeget "_pipeget@16" pval, int, int, int
+#func dirlist2 "_dirlist2@16" var, str, int, int
+#func dirlist2r "_dirlist2r@16" var, int, int, int
+#func dirlist2h "_dirlist2h@16" int, int, int, int
+
+*label_00
+	sdim var_0, 3000
+	sdim var_1, 3000
+	sdim var_2, 1000
+	sdim var_3, 500
+	sdim var_4, 100
+	var_4 = dirinfo(4)
+	sdim var_5, 10, 26
+	var_5(0) = "A:"
+	var_5(1) = "B:"
+	var_5(2) = "C:"
+	var_5(3) = "D:"
+	var_5(4) = "E:"
+	var_5(5) = "F:"
+	var_5(6) = "G:"
+	var_5(7) = "H:"
+	var_5(8) = "I:"
+	var_5(9) = "J:"
+	var_5(10) = "K:"
+	var_5(11) = "L:"
+	var_5(12) = "M:"
+	var_5(13) = "N:"
+	var_5(14) = "O:"
+	var_5(15) = "P:"
+	var_5(16) = "Q:"
+	var_5(17) = "R:"
+	var_5(18) = "S:"
+	var_5(19) = "T:"
+	var_5(20) = "U:"
+	var_5(21) = "V:"
+	var_5(22) = "W:"
+	var_5(23) = "X:"
+	var_5(24) = "Y:"
+	var_5(25) = "Z:"
+	sdim var_6, 256
+	var_6 = var_5(0) + "\n"
+	repeat 25, 1
+		var_6 = var_6 + var_5(cnt) + "\n"
+	loop
+	dim var_7
+	dim var_8
+	dim var_9
+	if ( instr(var_4, 0, "/a") != (-1) ) {
+		goto *label_13
+	}
+	screen 0, 500, 400
+	picload "back.jpg", 0
+	title "Ad-DrivE 1.1 - ようこそ"
+	font "ＭＳ ゴシック", 30, 16
+	mes "ようこそ"
+	line 0, 40, 500, 40
+	font "ＭＳ ゴシック", 13, 16
+	pos 10, 50
+	mes "Ad-DrivE 1.1は、仮想ドライブを作るソフトです。"
+	mes "設定はウィザード形式で行います。"
+	mes "まずは何をするかを選んでください。"
+	pos 30, 140
+	objsize 300, 25, 40
+	objmode 1, 1
+	button "仮想ドライブの作成 >>", *label_01
+	button "定義ファイルの作成 >>", *label_08
+	button "仮想ドライブの解除 >>", *label_10
+	pos 10, 300
+	objsize 300, 25, 0
+	mes "仮想ドライブを作成する場合は「仮想ドライブの作成」を選んでください。"
+	mes "定義ファイルを利用する場合も、上に同じです。"
+	mes "定義ファイルを作成する場合は「定義ファイルの作成」を選んでください。"
+	mes "定義ファイルについては、ヘルプをご覧ください。"
+	mes "仮想ドライブを解除する場合は、「仮想ドライブの解除」を選んでください。"
+	stop
+*label_01
+	title "Ad-DrivE 1.1 - 仮想ドライブの作成"
+	cls 0
+	picload "back.jpg", 0
+	font "ＭＳ ゴシック", 30, 16
+	mes "仮想ドライブの作成"
+	line 0, 40, 500, 40
+	font "ＭＳ ゴシック", 13, 16
+	pos 10, 50
+	mes "仮想ドライブを作成します。"
+	mes "定義ファイルを使用する場合は、「定義ファイルを使用する」を"
+	mes "選択してください。"
+	pos 30, 140
+	objsize 300, 25
+	objmode 1, 1
+	combox var_7, 150, "定義ファイルを使用しない\n定義ファイルを使用する"
+	pos 10, 200
+	mes "定義ファイルを使用する場合は、下にファイルの場所を指定してください。"
+	pos 30, 220
+	objsize 300, 20
+	objmode 1, 1
+	input var_0
+	pos 330, 220
+	objsize 100, 20
+	objmode 1, 1
+	button "参照...", *label_02
+	line 0, 350, 500, 350
+	pos 360, 360
+	objsize 70, 25
+	objmode 1, 1
+	button "<< 前へ", *label_00
+	pos 430, 360
+	button "次へ >>", *label_03
+	stop
+*label_02
+	dialog "add", 16, "Ad-DrivE1.1 定義ファイル"
+	if ( stat == 0 ) {
+		stop
+	}
+	var_0 = refstr
+	objprm 1, var_0
+	stop
+*label_03
+	if ( var_7 == 0 ) {
+		goto *label_04
+	}
+	if ( var_7 == 1 ) {
+		goto *label_07
+	}
+	stop
+*label_04
+	title "Ad-DrivE 1.1 - 仮想ドライブの作成２"
+	cls 0
+	picload "back.jpg", 0
+	font "ＭＳ ゴシック", 30, 16
+	mes "仮想ドライブの作成２"
+	line 0, 40, 500, 40
+	font "ＭＳ ゴシック", 13, 16
+	pos 10, 50
+	mes "仮想ドライブを作成します。"
+	mes "仮想ドライブにしたいドライブ名を選んでください。"
+	mes "既存のドライブと重複しないものを選んでください。"
+	pos 30, 120
+	objsize 100, 25
+	objmode 1, 1
+	combox var_8, 150, var_6
+	pos 10, 190
+	mes "次に、上で選んだドライブに割り当てるフォルダのフルパスを入力してください。"
+	pos 30, 230
+	objsize 300, 20
+	objmode 1, 1
+	input var_1
+	pos 330, 230
+	objsize 100, 20
+	objmode 1, 1
+	button "参照...", *label_05
+	line 0, 350, 500, 350
+	pos 360, 360
+	objsize 70, 25
+	objmode 1, 1
+	button "<< 前へ", *label_01
+	pos 430, 360
+	button "次へ >>", *label_06
+	stop
+*label_05
+	selfolder var_1, "ドライブに割り当てるフォルダを選んでください。"
+	if ( stat == 1 ) {
+		stop
+	}
+	objprm 1, var_1
+	stop
+*label_06
+	dirlist var_10, var_1, 5
+	if ( stat == 0 ) {
+		dialog "指定されたフォルダは存在しません\nフォルダのパスを確認してください。", 1, "エラー"
+		goto *label_04
+	}
+	fxinfo var_9, var_8 + 1, 8
+	if ( var_9 != 1 ) {
+		dialog "指定されたドライブは既に他の用途に割り当てられています。\n他のドライブ文字を選んでください。", 1, "エラー"
+		goto *label_04
+	}
+	exec "cmd.exe /c subst " + var_5(var_8) + " \"" + var_1 + "\"", 2
+	title "Ad-DrivE 1.1 - 仮想ドライブの作成３"
+	cls 0
+	picload "back.jpg", 0
+	font "ＭＳ ゴシック", 30, 16
+	mes "仮想ドライブの作成３"
+	line 0, 40, 500, 40
+	font "ＭＳ ゴシック", 13, 16
+	pos 10, 50
+	mes "仮想ドライブを作成する命令をシステムに送りました。"
+	mes "きちんと仮想ドライブが作成されているか確認してください。"
+	line 0, 350, 500, 350
+	pos 430, 360
+	objsize 70, 25
+	objmode 1, 1
+	button "終了", *label_12
+	stop
+*label_07
+	exist var_0
+	if ( strsize == (-1) ) {
+		dialog "指定された定義ファイルが見つかりません。\nファイルパスを確認してください。", 1, "エラー"
+		goto *label_01
+	}
+	notesel var_11
+	noteload var_0
+	noteget var_8, 0
+	var_8 = int(var_8)
+	noteget var_1, 1
+	dirlist var_10, var_1, 5
+	if ( stat == 0 ) {
+		dialog "定義ファイルにエラーがあります。\n指定されたフォルダは存在しません。", 1, "エラー"
+		goto *label_01
+	}
+	if ( var_8 > 26 | var_8 < 0 ) {
+		dialog "定義ファイルにエラーがあります。\n指定されたドライブ文字は使用できません。", 1, "エラー"
+		goto *label_01
+	}
+	fxinfo var_9, var_8 + 1, 8
+	if ( var_9 != 1 ) {
+		dialog "定義ファイルにエラーがあります。\n指定されたドライブ文字は別の用途に使われています。", 1, "エラー"
+		goto *label_01
+	}
+	exec "cmd.exe /c subst " + var_5(var_8) + " \"" + var_1 + "\"", 2
+	title "Ad-DrivE 1.1 - 仮想ドライブの作成２"
+	cls 0
+	picload "back.jpg", 0
+	font "ＭＳ ゴシック", 30, 16
+	mes "仮想ドライブの作成３"
+	line 0, 40, 500, 40
+	font "ＭＳ ゴシック", 13, 16
+	pos 10, 50
+	mes "仮想ドライブを作成する命令をシステムに送りました。"
+	mes "きちんと仮想ドライブが作成されているか確認してください。"
+	line 0, 350, 500, 350
+	pos 430, 360
+	objsize 70, 25
+	objmode 1, 1
+	button "終了", *label_12
+	stop
+*label_08
+	title "Ad-DrivE 1.1 - 定義ファイルの作成"
+	cls 0
+	picload "back.jpg", 0
+	font "ＭＳ ゴシック", 30, 16
+	mes "定義ファイルの作成"
+	line 0, 40, 500, 40
+	font "ＭＳ ゴシック", 13, 16
+	pos 10, 50
+	mes "定義ファイルを作成します。"
+	mes "定義ファイルは、毎回の入力の手間を省くための設定ファイルです。"
+	mes "作成した定義ファイルは、オートモードでも使用できます。"
+	pos 10, 100
+	mes "まず、仮想ドライブを割り当てるドライブ文字を選んでください。"
+	pos 30, 140
+	objsize 100, 25
+	objmode 1, 1
+	combox var_8, 150, var_6
+	pos 10, 190
+	mes "次に、仮想ドライブとして利用するフォルダを選択してください。"
+	pos 30, 230
+	objsize 300, 20
+	objmode 1, 1
+	input var_1
+	pos 330, 230
+	objsize 100, 20
+	objmode 1, 1
+	button "参照...", *label_05
+	pos 10, 270
+	mes "定義ファイルの作成時には、フォルダの存在チェックとドライブ文字の利用可否は"
+	mes "チェックしません。定義ファイル実行時に存在するフォルダとドライブ文字を選択"
+	mes "してください。実行時にチェックされます。"
+	mes "なおオートモードで使用する定義ファイルは「automode.add」というファイル名で"
+	mes "ad_drive.exeと同じフォルダに保存するようにしてください。"
+	line 0, 350, 500, 350
+	pos 360, 360
+	objsize 70, 25
+	objmode 1, 1
+	button "<< 前へ", *label_00
+	pos 430, 360
+	button "次へ >>", *label_09
+	stop
+*label_09
+	notesel var_2
+	noteadd "" + var_8, 0, 1
+	noteadd var_1, 1, 1
+	dialog "add", 17, "Ad-DrivE1.1 定義ファイル"
+	if ( stat == 0 ) {
+		stop
+	}
+	var_3 = getpath(refstr, 2)
+	if ( var_3 == ".add" ) {
+		notesave refstr
+	}
+	else {
+		notesave refstr + ".add"
+	}
+	title "Ad-DrivE 1.1 - 終了処理"
+	cls 0
+	picload "back.jpg", 0
+	font "ＭＳ ゴシック", 30, 16
+	mes "終了処理"
+	line 0, 40, 500, 40
+	font "ＭＳ ゴシック", 13, 16
+	pos 10, 50
+	mes "定義ファイルを保存しました。"
+	mes "きちんと保存されているか確認してください。"
+	line 0, 350, 500, 350
+	pos 430, 360
+	objsize 70, 25
+	objmode 1, 1
+	button "終了", *label_12
+	stop
+*label_10
+	title "Ad-DrivE 1.1 - 仮想ドライブの解除"
+	cls 0
+	picload "back.jpg", 0
+	font "ＭＳ ゴシック", 30, 16
+	mes "仮想ドライブの解除"
+	line 0, 40, 500, 40
+	font "ＭＳ ゴシック", 13, 16
+	pos 10, 50
+	mes "仮想ドライブを解除します。"
+	mes "解除するドライブを選んでください。"
+	mes "選択されたドライブが仮想ドライブかどうかはチェックしません。"
+	mes "正しいドライブを選ぶようにしてください。"
+	pos 30, 120
+	objsize 100, 25
+	objmode 1, 1
+	combox var_8, 150, var_6
+	line 0, 350, 500, 350
+	pos 360, 360
+	objsize 70, 25
+	objmode 1, 1
+	button "<< 前へ", *label_00
+	pos 430, 360
+	button "次へ >>", *label_11
+	stop
+*label_11
+	exec "cmd.exe /c subst /d " + var_5(var_8), 2
+	title "Ad-DrivE 1.1 - 終了処理"
+	cls 0
+	picload "back.jpg", 0
+	font "ＭＳ ゴシック", 30, 16
+	mes "終了処理"
+	line 0, 40, 500, 40
+	font "ＭＳ ゴシック", 13, 16
+	pos 10, 50
+	mes "仮想ドライブを解除しました。"
+	mes "きちんと解除されているか確認してください。"
+	line 0, 350, 500, 350
+	pos 430, 360
+	objsize 70, 25
+	objmode 1, 1
+	button "終了", *label_12
+	stop
+*label_12
+	end
+*label_13
+	screen 0, 0, 0, 2
+	exist "automode.add"
+	if ( strsize == (-1) ) {
+		dialog "ファイル「automode.add」が見つかりません。\n「automode.add」という定義ファイルを実行ファイルと同じディレクトリに配置してください。", 1, "Ad-DrivE オートモードエラー"
+		end
+	}
+	notesel var_11
+	noteload "automode.add"
+	noteget var_8, 0
+	var_8 = int(var_8)
+	noteget var_1, 1
+	dirlist var_10, var_1, 5
+	if ( stat == 0 ) {
+		dialog "定義ファイルにエラーがあります。\n指定されたフォルダは存在しません。", 1, "Ad-DrivE オートモードエラー"
+		end
+	}
+	if ( var_8 > 26 | var_8 < 0 ) {
+		dialog "定義ファイルにエラーがあります。\n指定されたドライブ文字は使用できません。", 1, "Ad-DrivE オートモードエラー"
+		end
+	}
+	fxinfo var_9, var_8 + 1, 8
+	if ( var_9 != 1 ) {
+		dialog "定義ファイルにエラーがあります。\n指定されたドライブ文字は別の用途に使われています。", 1, "Ad-DrivE オートモードエラー"
+		end
+	}
+	exec "cmd.exe /c subst " + var_5(var_8) + " \"" + var_1 + "\"", 2
+	end
